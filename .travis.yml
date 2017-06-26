@@ -1,0 +1,24 @@
+language: node_js
+addons:
+  ssh_known_hosts: 123.207.14.113
+  apt:
+    packages:
+    - sshpass
+node_js:
+- stable
+sudo: false
+script:
+- npm run build
+before_install:
+- openssl aes-256-cbc -K $encrypted_bd0bd10cde91_key -iv $encrypted_bd0bd10cde91_iv
+  -in id_rsa.enc -out ~/.ssh/id_rsa -d
+- chmod 600 ~/.ssh/id_rsa
+- echo -e "Host 123.207.14.113\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+after_success:
+- export SSHPASS=$pwd
+- sshpass -e scp ./deploy_oauth.sh $host:/usr/local/source/distss/
+- sshpass -e ssh $host 'cd /usr/local/source/distss && sh deploy_api.sh'
+env:
+  global:
+  - secure: ozwGeqzKCGv7//YSBUio69lJx/Wp5PzXNz4RH1SEnVzTAjua1Y6CXAB9VqGxaof3tVDxIW1EAI3RNwu+g1KJwik4vxVFesxDlHXWqrusV5AkyFyk9RYfkXFSy/gN1zoHKiB/e8cm/Jy5JdQkxtEsrivPZUGMAsm2mRMXZGzu3HeyTf7fSqetH+jT/TfSq5ymCzdWlRriXbGlOx85hvWThL8meFRmqe91BzKyt9VApPRjgum1uj8JFYwBN35jU34fSVU66XOvXpLaej7eq801nTJv+X/1yOP8LsF7KPr+mmWgmkTqL9pBcGnsqO97xBjgiAw4QW+ICoutBzO3O65c2uUqL3BrF1p/hgk2N5do/5rwPhf93OKod8lrTWVqHpQkw/7LtlFSpyWgCpjBK9iAr+Cj/Wg/YlkebF2UuvvKu0jgMJ4iAcexHENAEUHxCsoAjn/dQqxeN1IxBIW0PlAkMxXtKdmLaXyRR/QDNlcexm03A0Kj05HuTOHZKC9C06Sc9mAucmt6k7k3KXc3ueIouCxonUgP5fOzUlmanr6PiVHq1lH+dCq7qZw3HswAhzRoDx1ZJn9tLvhAhGuxezDIUASXA//WKZ88gBuHFPTRs9CNdlibbC6Td6tM6t2VqYK9uMPnlMse+tPdjNbrD3Q6wKuMI6QLfnBtoo9KUDNJnX8=
+  - secure: Qj2oQlnWub5suBPyK+RLZbzH0bWqRcgCpfkK+g8lSxK+v1Em+mAkOdAU7jG1lhdc9R3b/CzQ9CRiwPVW0TdZtmDj11cghA6DObCjhpS6ptJXJAZAutE1ynhhmlQ3y1BAkTVrBqAUpfeuoqITMJExye3YNshh6qhQTUqKgbm3AKCwSyfaSR3BHL+0Sds4+t9xGgFSycJF66J0JY7QT3jSt+YDQCo/lj2mdOdE6raMSBZtxl+JN5I9NGngRmmFZQSTPprNTjgu5hRDWQDUvddIuW6gl/iwezTxw35DITBPxi7dOPuDn5xGIOgHa/sSxWM6UOOLxss111ztC9mDsBJsKUquiKm0kWeaGhwJWGuAiFac4WILwLE3qI8crIRObG1U4Lg4Y3XnifYL9q5QkuRXShwVjWkytkjAAmidvy19iddPZn0n70GIckEvbjk1OX+B6V4RsDAtIzcOmLWgJP+LLy7Xq+xz/GCLU97BNqyC/lXwHGaU88ve9pYN2OtBo4RF4hrx0bJbAlEDx4GBob4/T+pI9VKzNDZemuoN+IvtVYHp+dzWyoPErmKv6IW/0oqqu71iIDJ60s4QHme34qiNnG3h+QuakMCSbzmpR0Y7OkHGBGrHCbq3nHYgr+TqCZKXyTL7HE/mIg1WGWyjdYND1bLO4Li5e1rMNvYSW3m2nkE=
