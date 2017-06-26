@@ -20,4 +20,4 @@ env:
   - secure: hP+G66wf9xPAj69K8JVjDYRdQAacthvrtqNOan/kXsRTg2kB6kEIFM2+chhzGczNupyFg2JJy3MG74zejrxRwT07zXc0IIsdyQPBarfKxHUdZR7V47LK3KBulkNR3CiJ73jGcQvtQMZf8NatvokkwVhs0YwJn3mtS/pi9o+HR5fK4e0h1Mbisql2gFU4gjGv1QDQBaz9CQm2F7J53uLFXmnTv0ePs3IltT+cZFhVdoQ2dzTj5ACR1A/Mc68q7a+kn6S1df01U1vK9qVuh10epcJBZXUpxjrezkYQudZzPIGINMjmzYUuUHfa7Tr8vELk2CFlvCJic52JpqwmSjMgHofjJKvHMlHFTdyfO9u5OQ9MkH8+y6KNStU7sccNcF5vNjoOwGt6amCJWoJeSpS+j8le0y6GmJG3/noPhB5tPQHstO063P9rY5gWwwJOp3Km+08UzCmfCvYWezI0yT6+DA4UsfTG6ldZUb4Zxl9VhqGPqFG2SQy56/cL3Vs4/xcCyZwsludOicfG2BLGTduJBRZa3ndUmKWLLvYhnMBscxGiv2MRxoANfbgh4nsKdqtd1JvkRweM6cxfHN8RE2jcsL0pmu3Rkvkv5zt6FJl9YV1b0kcX4YzXzGWGjk0KZaggt7DmtA+ZiiN8LIpauTW6F5CXTpIOj/0B0iuWWn2TSN4=
 before_install:
 - openssl aes-256-cbc -K $encrypted_b64c5cc1f43e_key -iv $encrypted_b64c5cc1f43e_iv
-  -in id_rsa.enc -out ~\/.ssh/id_rsa -d
+  -in id_rsa.enc -out ~/.ssh/id_rsa -d
