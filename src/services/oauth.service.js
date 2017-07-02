@@ -13,57 +13,57 @@ import OAuthClientsModel from '../models/oauth.client.model';
  * Get access token.
  */
 
-module.exports.getAccessToken = function*(bearerToken) {
+module.exports.getAccessToken = function(bearerToken, cb) {
 	console.log('in getAccessToken (bearerToken: ' + bearerToken + ')');
 
-	return yield OAuthTokensModel.findOne({
+	return OAuthTokensModel.findOne({
 		accessToken: bearerToken
-	});
+	}).lean().then(r => cb(null, r), e => cb(e));
 };
 
 /**
  * Get client.
  */
 
-module.exports.getClient = function*(clientId, clientSecret) {
+module.exports.getClient = function(clientId, clientSecret, callback) {
 	console.log('in getClient (clientId: ' + clientId + ', clientSecret: ' + clientSecret + ')');
 
-	return yield OAuthClientsModel.findOne({
+	return OAuthClientsModel.findOne({
 		clientId: clientId,
 		clientSecret: clientSecret
-	});
+	}).lean().then(x => callback(null, x), e => callback(e));
 };
 
 /**
  * Get refresh token.
  */
 
-module.exports.getRefreshToken = function*(refreshToken) {
+module.exports.getRefreshToken = function(refreshToken, cb) {
 	console.log('in getRefreshToken (refreshToken: ' + refreshToken + ')');
 
-	return yield OAuthTokensModel.findOne({
+	return OAuthTokensModel.findOne({
 		refreshToken: refreshToken
-	});
+	}).lean().then(r => cb(null, r), e => cb(e));
 };
 
 /*
  * Get user.
  */
 
-module.exports.getUser = function*(username, password) {
+module.exports.getUser = function(username, password, cb) {
 	console.log('in getUser (username: ' + username + ', password: ' + password + ')');
 
-	return yield OAuthUsersModel.findOne({
-		username: username,
+	return OAuthUsersModel.findOne({
+		name: username,
 		password: password
-	});
+	}).lean().then(u => cb(null, u), e => cb(e));
 };
 
 /**
  * Save token.
  */
 
-module.exports.saveToken = function*(token, client, user) {
+module.exports.saveAccessToken = function(token, client, expires, user, cb) {
 	console.log('in saveToken (token: ' + token + ')');
 
 	var accessToken = new OAuthTokensModel({
@@ -75,5 +75,11 @@ module.exports.saveToken = function*(token, client, user) {
 		userId: user.id
 	});
 
-	return yield accessToken.save();
+	return accessToken.save().then((res) => cb(null, res), (err) => cb(err));
 };
+
+
+module.exports.grantTypeAllowed = function(clientId, grantType, cb) {
+	console.log(true);
+	cb(null, true);
+}
