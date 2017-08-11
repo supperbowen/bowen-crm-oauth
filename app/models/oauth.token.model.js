@@ -10,6 +10,9 @@ mongoose.model('OAuthTokens', new Schema({
 	accessToken: {
 		type: String
 	},
+	expires: {
+		type: Date
+	},
 	accessTokenExpiresOn: {
 		type: Date
 	},

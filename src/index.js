@@ -23,6 +23,14 @@ app.use(mount('/oauth2', koaRouter.middleware()));
 
 // Register `/token` POST path on oauth router (i.e. `/oauth2/token`).
 koaRouter.post('/token', app.oauth.grant());
+
+//鉴权服务
+koaRouter.post('/authorize', async function(ctx){	
+	app.oauth.authorise()().then((arg)=>{
+		console.log(arg);
+	})
+	ctx.body = 'Hello Koa in app.js';
+});
 //app.use(app.oauth.authorise());
 
 koaRouter.get('/test', function() {
@@ -40,5 +48,5 @@ app.use(koaRouter.routes())
 var mongoose = require('mongoose');
 mongoose.connect(context.dburl);
 
-app.listen(8089);
-console.log('server started : http://localhost:8089/');
+app.listen(8086);
+console.log('server started : http://localhost:8086/');

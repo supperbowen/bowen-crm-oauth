@@ -95,11 +95,12 @@ module.exports.saveAccessToken = function (token, client, expires, user, cb) {
 	console.log('in saveToken (token: ' + token + ')');
 
 	var accessToken = new _oauthToken2.default({
-		accessToken: token.accessToken,
-		accessTokenExpiresOn: token.accessTokenExpiresOn,
-		clientId: client.id,
-		refreshToken: token.refreshToken,
-		refreshTokenExpiresOn: token.refreshTokenExpiresOn,
+		accessToken: token,
+		expires: expires,
+		accessTokenExpiresOn: expires,
+		clientId: client,
+		refreshToken: token,
+		refreshTokenExpiresOn: expires,
 		userId: user.id
 	});
 
